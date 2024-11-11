@@ -84,10 +84,7 @@ export default function Profile() {
                 onChange={(e) =>
                   setProfile((prev) => ({
                     ...prev,
-                    date: [
-                      new Date(e.target.value + "T00:00:00"),
-                      prev.date[1],
-                    ],
+                    date: [new Date(e.target.value), prev.date[1]],
                   }))
                 }
                 className="w-full p-2 border rounded"
@@ -101,10 +98,7 @@ export default function Profile() {
                 onChange={(e) =>
                   setProfile((prev) => ({
                     ...prev,
-                    date: [
-                      prev.date[0],
-                      new Date(e.target.value + "T00:00:00"),
-                    ],
+                    date: [prev.date[0], new Date(e.target.value)],
                   }))
                 }
                 className="w-full p-2 border rounded"
