@@ -97,12 +97,12 @@ export default function Home() {
                     <div className="px-3 py-1 rounded-full bg-white text-primary text-xs font-semibold shadow-lg border-2 border-primary">
                       {card.distance}mi
                     </div>
-                    <div className="px-3 py-1 rounded-full bg-white text-xs font-semibold shadow-lg border-2" 
-                         style={{ borderColor: '#EBBAB9', color: '#EBBAB9' }}>
+                    <div className="px-3 py-1 rounded-full bg-white text-xs font-semibold shadow-lg border-2"
+                      style={{ borderColor: '#EBBAB9', color: '#EBBAB9' }}>
                       {card.bedrooms} bd, {card.bathrooms} ba, {card.sqft} sqft
                     </div>
-                    <div className="px-3 py-1 rounded-full bg-white text-xs font-semibold shadow-lg border-2" 
-                         style={{ borderColor: '#AEF3E1', color: '#789187' }}>
+                    <div className="px-3 py-1 rounded-full bg-white text-xs font-semibold shadow-lg border-2"
+                      style={{ borderColor: '#AEF3E1', color: '#789187' }}>
                       ${card.cost}
                     </div>
                   </div>
@@ -130,13 +130,72 @@ export default function Home() {
         <DrawerContent>
           <div className="mx-auto w-full max-w-sm">
             <DrawerHeader>
-              <DrawerTitle>Details</DrawerTitle>
-              <DrawerDescription>In-depth look at your property.</DrawerDescription>
+              <DrawerTitle className="text-2xl font-bold">Details</DrawerTitle>
             </DrawerHeader>
-            <div className="h-96">Put Content Here</div>
-            <DrawerFooter>
+            <div className="space-y-4 px-4 py-2 text-gray-900">
+              <div>
+                <p className="text-lg font-semibold">{cards[0].bedrooms} bedrooms, {cards[0].bathrooms} bathrooms</p>
+                <div className="flex space-x-2 mt-1">
+                  <span className="px-2 py-1 rounded-full bg-blue-100 text-blue-600 text-xs font-semibold">Confirmed (Text)</span>
+                  <span className="px-2 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-semibold">From Listing</span>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-lg font-semibold">{cards[0].sqft} square feet</p>
+                <span className="px-2 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-semibold">From Listing</span>
+              </div>
+
+              <div>
+                <p className="text-lg font-semibold">{cards[0].address}</p>
+                <span className="px-2 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-semibold">From Listing</span>
+              </div>
+
+              <div>
+                <p className="text-lg font-semibold">${cards[0].cost} per month</p>
+                <div className="flex space-x-2 mt-1">
+                  <span className="px-2 py-1 rounded-full bg-blue-100 text-blue-600 text-xs font-semibold">Confirmed (Text)</span>
+                  <span className="px-2 py-1 rounded-full text-blue-600 text-xs font-semibold underline cursor-pointer">jump to text</span>
+                </div>
+              </div>
+            </div>
+
+            <hr className="my-4 border-gray-300" />
+
+            <div className="px-4 py-2">
+              <h2 className="text-xl font-bold mb-2">AI-assisted Conversation</h2>
+
+              <div className="flex justify-center">
+                <p className="text-xs text-gray-500">Wed 6:55 AM</p>
+              </div>
+
+              <div className="space-y-3 mt-2">
+                <div className="flex flex-col items-end">
+                  <div className="bg-blue-600 text-white rounded-lg p-3 max-w-xs text-sm font-medium shadow-md">
+                    Is this still available?
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">Seen 16h ago</p>
+                </div>
+
+                <div className="flex justify-start items-end">
+                  <div className="bg-gray-800 text-white rounded-lg p-3 max-w-xs text-sm font-medium shadow-md">
+                    It sure is!
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex space-x-4 mt-6 justify-center">
+                <button className="px-4 py-1.5 rounded-full border border-blue-600 text-blue-600 text-xs font-semibold hover:bg-blue-100 transition">
+                  Ask about price
+                </button>
+                <button className="px-4 py-1.5 rounded-full border border-blue-600 text-blue-600 text-xs font-semibold hover:bg-blue-100 transition">
+                  Pet policy?
+                </button>
+              </div>
+            </div>
+            <DrawerFooter className="flex justify-center mt-4">
               <DrawerClose asChild>
-                <ChevronDown className="self-center" />
+                <ChevronDown className="self-center cursor-pointer" />
               </DrawerClose>
             </DrawerFooter>
           </div>
