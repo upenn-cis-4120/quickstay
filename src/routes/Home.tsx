@@ -71,7 +71,7 @@ export default function Home() {
   return (
     <div className="p-4">
       <div className="flex flex-col items-center">
-        <div className="relative w-full max-w-sm h-[500px]">
+        <div className="relative w-full max-w-sm h-[calc(100dvh-14rem)]">
           {cards.length > 0 && cards.map((card, index) => (
             <div
               key={index}
@@ -94,14 +94,14 @@ export default function Home() {
                 />
                 <div className="absolute top-2 w-full px-2">
                   <div className="flex justify-between">
-                    <div className="px-3 py-1 rounded-full bg-white text-primary text-xs font-semibold shadow-lg border-2 border-primary">
+                    <div className="px-3 py-1 rounded-full bg-white text-primary text-sm font-semibold shadow-lg border-2 border-primary">
                       {card.distance}mi
                     </div>
-                    <div className="px-3 py-1 rounded-full bg-white text-xs font-semibold shadow-lg border-2"
+                    <div className="px-3 py-1 rounded-full bg-white text-sm font-semibold shadow-lg border-2"
                       style={{ borderColor: '#EBBAB9', color: '#EBBAB9' }}>
                       {card.bedrooms} bd, {card.bathrooms} ba, {card.sqft} sqft
                     </div>
-                    <div className="px-3 py-1 rounded-full bg-white text-xs font-semibold shadow-lg border-2"
+                    <div className="px-3 py-1 rounded-full bg-white text-sm font-semibold shadow-lg border-2"
                       style={{ borderColor: '#AEF3E1', color: '#789187' }}>
                       ${card.cost}
                     </div>
