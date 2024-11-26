@@ -6,6 +6,7 @@ import "./index.css";
 import Home from "./routes/Home";
 import Matches from "./routes/Matches";
 import Profile from "./routes/Profile";
+import HomeAlternate from "./routes/HomeAlternate";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/alternate",
+        element: <HomeAlternate />,
       }
     ]
   },
