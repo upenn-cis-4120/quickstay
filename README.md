@@ -1,4 +1,4 @@
-# Quickstay
+# [Quickstay](https://qstay.netlify.app/)
 
 `bun install`
 `bun dev`

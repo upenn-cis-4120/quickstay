@@ -176,7 +176,7 @@ export default function Matches() {
       </div>
 
       {/* Filter Buttons and Reset Button */}
-      <div className="flex items-center space-x-4 mb-6">
+      <div className="flex flex-wrap items-start gap-x-4 gap-y-4 mb-6">
         {/* Dates Filter */}
         <Popover.Root>
           <FilterButton icon={<FiCalendar />} ariaLabel="Filter by Dates">
