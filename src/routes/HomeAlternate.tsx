@@ -3,7 +3,7 @@ import { ChevronDown, ChevronUp } from 'geist-icons';
 import { useState } from 'react'
 import { initialCards } from './Home';
 
-export default function AlternateHome() {
+export default function HomeAlternate() {
   const [cards, setCards] = useState(initialCards);
 
   const handleCardDecision = (accept: boolean) => {
