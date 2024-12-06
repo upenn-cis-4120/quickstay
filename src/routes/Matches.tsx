@@ -13,6 +13,12 @@ import {
   FiRefreshCw,
 } from "react-icons/fi";
 import { generateProperties } from "@/utils/generateProperties";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface Property {
   id: string;
@@ -57,6 +63,38 @@ const FilterButton: React.FC<FilterButtonProps> = ({
     </button>
   </Popover.Trigger>
 );
+
+const StatusPill = ({ status }: { status: string }) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <TooltipProvider delayDuration={0}>
+      <Tooltip open={open}>
+        <TooltipTrigger asChild>
+          <div
+            className={`
+              px-2 py-1 rounded-full text-xs cursor-pointer
+              ${status === "Deal Done" ? "bg-blue-100 text-blue-800" : ""}
+              ${status === "Available" ? "bg-green-100 text-green-800" : ""}
+              ${status === "No Resp." ? "bg-red-100 text-red-800" : ""}
+            `}
+            onClick={() => setOpen(!open)}
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={() => setOpen(false)}
+            onTouchStart={() => setOpen(!open)}
+          >
+            {status}
+          </div>
+        </TooltipTrigger>
+        <TooltipContent>
+          {status === "Deal Done" && "Property has been successfully subletted"}
+          {status === "Available" && "Property is available to sublet"}
+          {status === "No Resp." && "Owner has not responded to AI reachout"}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+};
 
 export default function Matches() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -416,28 +454,7 @@ export default function Matches() {
               <div className="p-4">
                 <div className="flex justify-between items-center mb-2">
                   <h3 className="text-lg font-semibold">{property.title}</h3>
-                  <div
-                    className={`
-                      px-2 py-1 rounded-full text-xs
-                      ${
-                        property.status === "Deal Done"
-                          ? "bg-blue-100 text-blue-800"
-                          : ""
-                      }
-                      ${
-                        property.status === "Available"
-                          ? "bg-green-100 text-green-800"
-                          : ""
-                      }
-                      ${
-                        property.status === "No Resp."
-                          ? "bg-red-100 text-red-800"
-                          : ""
-                      }
-                    `}
-                  >
-                    {property.status}
-                  </div>
+                  <StatusPill status={property.status} />
                 </div>
                 <p className="text-gray-600 font-medium">
                   ${property.price}/night
