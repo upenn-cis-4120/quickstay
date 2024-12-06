@@ -10,6 +10,19 @@ import {
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from "geist-icons";
 import { useState } from "react";
 
+interface Message {
+  id: string;
+  text: string;
+  sender: "user" | "subletter";
+  timestamp: Date;
+}
+
+interface MessageSuggestion {
+  id: string;
+  text: string;
+  question: string;
+}
+
 export const initialCards = [
   {
     distance: 2.2,
@@ -90,6 +103,74 @@ export default function Home() {
   const [dragPosition, setDragPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
+
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: "1",
+      text: "Is this still available?",
+      sender: "user",
+      timestamp: new Date("2024-12-06T06:55:00"),
+    },
+    {
+      id: "2",
+      text: "It sure is!",
+      sender: "subletter",
+      timestamp: new Date("2024-12-06T06:55:30"),
+    },
+  ]);
+
+  const [messageSuggestions, setMessageSuggestions] = useState<
+    MessageSuggestion[]
+  >([
+    {
+      id: "price",
+      text: "Ask about price",
+      question: "What's the price?",
+    },
+    {
+      id: "pets",
+      text: "Pet policy?",
+      question: "What's your pet policy?",
+    },
+  ]);
+
+  const addMessage = (text: string, sender: "user" | "subletter") => {
+    const newMessage: Message = {
+      id: Math.random().toString(36).substr(2, 9),
+      text,
+      sender,
+      timestamp: new Date(),
+    };
+    setMessages((prev) => [...prev, newMessage]);
+  };
+
+  const simulateSubletterResponse = (userMessage: string) => {
+    setTimeout(() => {
+      let response = "Thank you for your message. I'll get back to you soon.";
+
+      if (userMessage.includes("available")) {
+        response = "Yes, the property is still available for the dates shown.";
+      } else if (userMessage.includes("price")) {
+        response = "We can discuss the price. What's your budget?";
+      } else if (userMessage.includes("interested")) {
+        response = "Great! Would you like to schedule a viewing?";
+      } else if (userMessage.includes("pet")) {
+        response = "We allow small pets. What kind of pet do you have?";
+      }
+
+      addMessage(response, "subletter");
+    }, 1000);
+  };
+
+  const handleUserMessage = (text: string) => {
+    addMessage(text, "user");
+    simulateSubletterResponse(text);
+
+    // Remove the used suggestion
+    setMessageSuggestions((prev) =>
+      prev.filter((suggestion) => suggestion.question !== text),
+    );
+  };
 
   const handleCardDecision = (accept: boolean) => {
     if (cards.length > 1) {
@@ -229,7 +310,7 @@ export default function Home() {
                   Details
                 </DrawerTitle>
               </DrawerHeader>
-              <div className="space-y-4 px-4 py-2 text-gray-900">
+              <div className="space-y-4 px-4 text-gray-900">
                 <div>
                   <p className="text-lg font-semibold">
                     {currentCard.bedrooms} bedrooms, {currentCard.bathrooms}{" "}
@@ -278,40 +359,47 @@ export default function Home() {
 
               <hr className="my-4 border-gray-300" />
 
-              <div className="px-4 py-2">
+              <div className="px-4">
                 <h2 className="text-xl font-bold mb-2">
                   AI-assisted Conversation
                 </h2>
-
-                <div className="flex justify-center">
-                  <p className="text-xs text-gray-500">Wed 6:55 AM</p>
-                </div>
-
-                <div className="space-y-3 mt-2">
-                  <div className="flex flex-col items-end">
-                    <div className="bg-blue-600 text-white rounded-lg p-3 max-w-xs text-sm font-medium shadow-md">
-                      Is this still available?
+                <div
+                  className="space-y-3 mt-4 max-h-[30vh] overflow-y-auto"
+                  style={{
+                    scrollbarWidth: "thin",
+                    scrollbarColor: "#CBD5E0 #F1F5F9",
+                  }}
+                >
+                  {messages.map((message) => (
+                    <div
+                      key={message.id}
+                      className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
+                    >
+                      <div
+                        className={`rounded-lg p-2 max-w-xs text-sm font-medium shadow-md ${
+                          message.sender === "user"
+                            ? "bg-blue-600 text-white"
+                            : "bg-gray-800 text-white"
+                        }`}
+                      >
+                        {message.text}
+                      </div>
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">Seen 16h ago</p>
-                  </div>
-
-                  <div className="flex justify-start items-end">
-                    <div className="bg-gray-800 text-white rounded-lg p-3 max-w-xs text-sm font-medium shadow-md">
-                      It sure is!
-                    </div>
-                  </div>
+                  ))}
                 </div>
-
                 <div className="flex space-x-4 mt-6 justify-center">
-                  <button className="px-4 py-1.5 rounded-full border border-blue-600 text-blue-600 text-xs font-semibold hover:bg-blue-100 transition">
-                    Ask about price
-                  </button>
-                  <button className="px-4 py-1.5 rounded-full border border-blue-600 text-blue-600 text-xs font-semibold hover:bg-blue-100 transition">
-                    Pet policy?
-                  </button>
+                  {messageSuggestions.map((suggestion) => (
+                    <button
+                      key={suggestion.id}
+                      onClick={() => handleUserMessage(suggestion.question)}
+                      className="px-4 py-1.5 rounded-full border border-blue-600 text-blue-600 text-xs font-semibold hover:bg-blue-100 transition"
+                    >
+                      {suggestion.text}
+                    </button>
+                  ))}
                 </div>
               </div>
-              <DrawerFooter className="flex justify-center mt-4">
+              <DrawerFooter className="flex justify-center">
                 <DrawerClose asChild>
                   <ChevronDown className="self-center cursor-pointer" />
                 </DrawerClose>
