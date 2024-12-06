@@ -3,4 +3,4 @@
 `bun install`
 `bun dev`
 
-(meant to be run in a mobile viewport)
+*Must be opened in Google Chrome DevTools Responsive Design Mode if on desktop*
